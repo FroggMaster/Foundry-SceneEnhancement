@@ -18,15 +18,15 @@ export default class DFSceneNav {
 		// Determine our enabled state
 		const enabled = (game.user.isGM && gmClick) || (!game.user.isGM && pcClick);
 		if (enabled) {
-			libWrapper.register(SETTINGS.MOD_NAME, 'SceneDirectory.prototype._onClickDocumentName', this._onClickDocumentName, 'MIXED');
+			libWrapper.register(SETTINGS.MOD_NAME, 'SceneDirectory.prototype._onClickEntryName', this._onClickEntryName, 'MIXED');
 			libWrapper.register(SETTINGS.MOD_NAME, 'SceneDirectory.prototype._getEntryContextOptions', this._getEntryContextOptions, 'WRAPPER');
 		} else {
-			libWrapper.unregister(SETTINGS.MOD_NAME, 'SceneDirectory.prototype._onClickDocumentName', false);
+			libWrapper.unregister(SETTINGS.MOD_NAME, 'SceneDirectory.prototype._onClickEntryName', false);
 			libWrapper.unregister(SETTINGS.MOD_NAME, 'SceneDirectory.prototype._getEntryContextOptions', false);
 		}
 	}
 
-	private static _onClickDocumentName(this: SceneDirectory, wrapper: AnyFunction, event: JQuery.ClickEvent) {
+	private static _onClickEntryName(this: SceneDirectory, wrapper: AnyFunction, event: JQuery.ClickEvent) {
 		event.preventDefault();
 		const entity = SceneDirectory.collection.get(event.currentTarget.parentElement.dataset.documentId);
 		if (entity instanceof Scene) entity.view();
